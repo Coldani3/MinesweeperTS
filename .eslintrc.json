@@ -1,0 +1,47 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": "standard-with-typescript",
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+        "eqeqeq": "warn",
+      "indent": [
+        "error",
+        "tab"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
+      "curly": [
+        "error",
+        "all"
+      ],
+      "brace-style": "error",
+      "max-len": [
+        "error",
+        {
+          "code": 130
+        }
+      ],
+      "semi-style": [
+        "error",
+        "last"
+      ],
+      "no-unused-vars": [
+        "error",
+        {
+          "vars": "all",
+          "args": "none"
+        }
+      ]
+    }
+}
