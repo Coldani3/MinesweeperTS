@@ -1,11 +1,3 @@
-export default class Bomb 
-{
-    xPos: number;
-    yPos: number;
+import GridObject from "./GridObject";
 
-    constructor(xPos: number, yPos: number) 
-    {
-        this.xPos = xPos;
-        this.yPos = yPos;
-    }
-}
+export default class Bomb extends GridObject {}
