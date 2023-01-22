@@ -1,17 +1,18 @@
 import Board from "./Board";
 import BoardSize from "./Config/BoardSize";
-import { Difficulty, EasyDifficulty, MediumDifficulty, HardDifficulty } from "./Config/Difficulty";
+import { Difficulty, EasyDifficulty, MediumDifficulty, HardDifficulty, RussianRouletteDifficulty } from "./Config/Difficulty";
 //import * as HTMLIds from "./HTMLIds";
-import {UI, DropdownElement, UserNumberInput} from "./UIElements";
+import {UI, DropdownElement, UserNumberInput, GameArea, GameGrid, buttonSize, gameAreaPaddingBottom} from "./UIElements";
 
 const difficulties: Difficulty[] = [
     EasyDifficulty,
     MediumDifficulty,
-    HardDifficulty
+    HardDifficulty,
+    RussianRouletteDifficulty
 ];
 
 const defaultDifficulty: Difficulty = EasyDifficulty;
-
+const debugMode: boolean = false;
 
 class Main
 {
@@ -56,6 +57,24 @@ class Main
         return defaultDifficulty;
     }
 
+    clearDebugButton()
+    {
+        UI.debugButton().remove();
+    }
+
+    displayGrid(difficulty: Difficulty)
+    {
+        let gameArea: GameArea = UI.gameArea();
+        let gameGrid: GameGrid = UI.gameGrid();
+        gameArea.css("display", "flex");
+
+        this.board.generateButtons();
+
+        gameArea.height(buttonSize * this.board.size.rows + gameAreaPaddingBottom);
+        gameGrid.width(buttonSize * this.board.size.columns);
+        gameGrid.height(buttonSize * this.board.size.rows);
+    }
+
     start()
     {
         console.log("Test!");
@@ -63,6 +82,15 @@ class Main
         let difficulty: Difficulty = this.getDifficulty();
 
         this.board = new Board(difficulty.boardSize);
+
+        if (!debugMode)
+        {
+            this.clearDebugButton();
+        }
+
+        this.displayGrid(difficulty);
+
+        UI.bombCount().text(difficulty.bombCount);
     }
 
     reset()
@@ -96,6 +124,16 @@ class Main
 
             this.nightModeActive = false;
         }
+    }
+
+    buttonClicked(column: number, row: number)
+    {
+
+    }
+
+    onRightClick(column: number, row: number)
+    {
+
     }
 }
 

@@ -2,6 +2,7 @@ import BoardSize from "./Config/BoardSize";
 import Bomb from "./Bomb";
 import Flag from "./Flag";
 import GridObject from "./GridObject";
+import { UI, GameGrid } from "./UIElements";
 
 function searchGridObjList(x: number, y: number, list: GridObject[]) : boolean
 {
@@ -49,11 +50,10 @@ export default class Board
 
     inBounds(x: number, y: number): boolean
     {
-        return 
-            x <= this.size.columns - 1 &&
-            x >= 0 &&
-            y <= this.size.rows - 1 &&
-            y >= 0;
+        return  x <= this.size.columns - 1 &&
+                x >= 0 &&
+                y <= this.size.rows - 1 &&
+                y >= 0;
     }
 
     searchForBombsAround(x: number, y: number) : number 
@@ -64,7 +64,8 @@ export default class Board
         {
             for (let boardY = -1; boardY <= 1; boardY++)
             {
-                if (boardX == 0 && boardY == 0)
+                //don't search this square
+                if (boardX === 0 && boardY === 0)
                 {
                     continue;
                 }
@@ -73,17 +74,38 @@ export default class Board
                     let currX = x + boardX;
                     let currY = y + boardY;
     
-                    if (this.inBounds(currX, currY))
+                    if (this.inBounds(currX, currY) && this.bombAt(currX, currY))
                     {
-                        if (this.bombAt(currX, currY))
-                        {
-                            bombsFound++;
-                        }
+                        bombsFound++;
                     }
                 }
             }
         }
     
         return bombsFound;
+    }
+
+    //only called when a tile is pressed to ensure that the first tile the player presses is not a bomb
+    spreadBombs(startClickX: number, startClickY: number)
+    {
+
+    }
+
+    generateButtons()
+    {
+        let gameGrid: GameGrid = UI.gameGrid();
+
+        //collect all HTML into one string to add at once, because that makes generating it much faster due to only one update to the DOM
+        let htmlToAdd: string = "";
+
+        for (let row: number = 0; row < this.size.rows; row++)
+        {
+            for (let col: number = 0; col < this.size.columns; col++)
+            {
+                htmlToAdd += `<div class='button' id='b${col}-${row}' onclick='main.buttonClicked(${col}, ${row})' oncontextmenu='main.onRightClick(${col}, ${row}); return false;'> </button></div>`;
+            }
+        }
+
+        $(htmlToAdd).appendTo(gameGrid);
     }
 }
