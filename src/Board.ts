@@ -50,9 +50,9 @@ export default class Board
     inBounds(x: number, y: number): boolean
     {
         return 
-            x <= this.size.width - 1 &&
+            x <= this.size.columns - 1 &&
             x >= 0 &&
-            y <= this.size.height - 1 &&
+            y <= this.size.rows - 1 &&
             y >= 0;
     }
 
