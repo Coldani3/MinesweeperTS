@@ -17,11 +17,17 @@ function searchGridObjList(x: number, y: number, list: GridObject[]) : boolean
     return false;
 }
 
+function randomRange(max: number)
+{
+    return Math.floor(Math.random() * max);
+}
+
 export default class Board 
 {
     size: BoardSize;
     bombs: Bomb[];
     flags: Flag[];
+    populated: boolean = false;
 
     constructor(boardSize: BoardSize)
     {
@@ -46,6 +52,16 @@ export default class Board
     placeFlagAt(x: number, y: number)
     {
         this.flags.push(new Flag(x, y));
+    }
+
+    removeFlagAt(x: number, y: number)
+    {
+        this.flags = this.flags.filter(function(flag: Flag) { flag.xPos != x && flag.yPos != y });
+    }
+
+    flagCount() : number
+    {
+        return this.flags.length;
     }
 
     inBounds(x: number, y: number): boolean
@@ -86,9 +102,28 @@ export default class Board
     }
 
     //only called when a tile is pressed to ensure that the first tile the player presses is not a bomb
-    spreadBombs(startClickX: number, startClickY: number)
+    spreadBombs(startClickX: number, startClickY: number, bombCount: number)
     {
+        if (!this.populated)
+        {
+            for (let bombPlaced: number = 0; bombPlaced < bombCount; bombPlaced++)
+            {
+                let bombX: number = randomRange(this.size.columns);
+                let bombY: number = randomRange(this.size.rows);
 
+                if (!(bombX === startClickX && bombY === startClickY) && !this.bombAt(bombX, bombY))
+                {
+                    this.placeBombAt(bombX, bombY);
+                }
+                else
+                {
+                    bombPlaced--;
+                    continue;
+                }
+            }
+
+            this.populated = true;
+        }
     }
 
     generateButtons()

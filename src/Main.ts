@@ -2,7 +2,7 @@ import Board from "./Board";
 import BoardSize from "./Config/BoardSize";
 import { Difficulty, EasyDifficulty, MediumDifficulty, HardDifficulty, RussianRouletteDifficulty } from "./Config/Difficulty";
 //import * as HTMLIds from "./HTMLIds";
-import {UI, DropdownElement, UserNumberInput, GameArea, GameGrid, buttonSize, gameAreaPaddingBottom} from "./UIElements";
+import {UI, DropdownElement, UserNumberInput, GameArea, GameGrid, buttonSize, gameAreaPaddingBottom, GridButton} from "./UIElements";
 
 const difficulties: Difficulty[] = [
     EasyDifficulty,
@@ -29,7 +29,7 @@ class Main
     {
         let rows: UserNumberInput = UI.customRowElement();
         let cols: UserNumberInput = UI.customColumnElement();
-        return rows && rows.val() > 0 && cols && cols.val() > 0;
+        return rows && (rows.val() as number) > 0 && cols && (cols.val() as number) > 0;
     }
 
     getCustomSize() : BoardSize
@@ -73,6 +73,11 @@ class Main
         gameArea.height(buttonSize * this.board.size.rows + gameAreaPaddingBottom);
         gameGrid.width(buttonSize * this.board.size.columns);
         gameGrid.height(buttonSize * this.board.size.rows);
+    }
+
+    checkHasGameBeenWon()
+    {
+
     }
 
     start()
@@ -126,15 +131,34 @@ class Main
         }
     }
 
+    //called from left clicking a tile
     buttonClicked(column: number, row: number)
     {
 
     }
 
+    //called from right clicking a tile
     onRightClick(column: number, row: number)
     {
+        if (this.running)
+        {
+            let gridButton: GridButton = UI.gridButtonAt(column, row);
 
+            if (!gridButton.isFlagged())
+            {
+                if (!gridButton.isRevealed())
+                {
+                    gridButton.flag(this.board);
+                }
+            }
+            else
+            {
+                gridButton.unflag(this.board);
+            }
+
+            this.checkHasGameBeenWon();
+        }
     }
 }
 
-const main: Main = new Main();
+export const main: Main = new Main();
