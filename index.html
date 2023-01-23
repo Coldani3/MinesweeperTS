@@ -4,12 +4,13 @@
         <title>Minesweeper</title>
         <link rel="icon" href="bomb.png">
         <!--JQuery Boilerplate-->
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script type="module" src="src/Main.js"></script>
         <link rel="stylesheet" type="text/css" href="minesweeper.css">
     </head>
     <body>
         <div id="options" class="optionsStyle">
-            <button id="nightmodeButton" onclick="main.toggleNightmode()">Enable/Disable Night Mode</button>
+            <button id="nightmodeButton">Enable/Disable Night Mode</button>
             <br/>
             <table>
                 <tr>
@@ -42,7 +43,7 @@
             <br/>
             
             
-            <button onclick="main.start()">Start</button>
+            <button id="startButton">Start</button>
         </div>
 
         <div id="game" class="gameStyle">
@@ -60,14 +61,20 @@
                 <tr>
                     <td>
                         <div id="resetButton">
-                            <button onclick="main.reset()">Reset</button>
+                            <button id="resetButton">Reset</button>
                             <br/>
-                            <button id="debugButton" onclick="main.toggleDebugMode()"></button>
+                            <button id="debugButton"></button>
                         </div>
                     </td>
                 </tr>
             </table>
         </div>
-        <script type="module" src="src/Main.js"></script>
+        <script>
+            console.log("start");
+            $("#nightmodeButton").on("click", toggleNightmode);
+            $("#debugButton").on("click", toggleDebugMode);
+            $("#resetButton").on("click", reset);
+            $("#startButton").on("click", start);
+        </script>
     </body>
 </html>

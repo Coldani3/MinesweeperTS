@@ -64,6 +64,7 @@ class Main
 
     displayGrid(difficulty: Difficulty)
     {
+        console.log("Displaying grid");
         let gameArea: GameArea = UI.gameArea();
         let gameGrid: GameGrid = UI.gameGrid();
         gameArea.css("display", "flex");
@@ -82,25 +83,42 @@ class Main
 
     start()
     {
-        console.log("Test!");
-
-        let difficulty: Difficulty = this.getDifficulty();
-
-        this.board = new Board(difficulty.boardSize);
-
-        if (!debugMode)
+        if (!this.running)
         {
-            this.clearDebugButton();
+            console.log("Test!");
+
+            let difficulty: Difficulty = this.getDifficulty();
+
+            this.board = new Board(difficulty.boardSize);
+
+            if (!debugMode)
+            {
+                this.clearDebugButton();
+            }
+
+            this.displayGrid(difficulty);
+
+            UI.bombCount().text(difficulty.bombCount);
+
+            this.running = true;
         }
+        else
+        {
+            
 
-        this.displayGrid(difficulty);
-
-        UI.bombCount().text(difficulty.bombCount);
+            this.reset();
+        }
     }
 
     reset()
     {
+        if (this.running)
+        {
+            let difficulty: Difficulty = this.getDifficulty();
+            this.board = new Board(difficulty.boardSize);
 
+            this.displayGrid(difficulty);
+        }
     }
 
     toggleDebugMode()
@@ -134,7 +152,10 @@ class Main
     //called from left clicking a tile
     buttonClicked(column: number, row: number)
     {
-
+        if (this.running && this.board && !this.board.populated)
+        {
+            this.board.spreadBombs(column, row, this.getDifficulty().bombCount);
+        }
     }
 
     //called from right clicking a tile
@@ -162,3 +183,5 @@ class Main
 }
 
 export const main: Main = new Main();
+
+//window.main = function() { return main };
