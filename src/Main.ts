@@ -104,8 +104,6 @@ class Main
         }
         else
         {
-            
-
             this.reset();
         }
     }
