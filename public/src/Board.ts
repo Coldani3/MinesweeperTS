@@ -1,8 +1,8 @@
-import BoardSize from "./Config/BoardSize";
-import Bomb from "./Bomb";
-import Flag from "./Flag";
-import GridObject from "./GridObject";
-import { UI, GameGrid } from "./UIElements";
+import BoardSize from "./Config/BoardSize.js";
+import Bomb from "./Bomb.js";
+import Flag from "./Flag.js";
+import GridObject from "./GridObject.js";
+import { UI, GameGrid } from "./UIElements.js";
 
 function searchGridObjList(x: number, y: number, list: GridObject[]) : boolean
 {

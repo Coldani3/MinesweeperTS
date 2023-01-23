@@ -1,8 +1,10 @@
-import Board from "./Board";
-import BoardSize from "./Config/BoardSize";
-import { Difficulty, EasyDifficulty, MediumDifficulty, HardDifficulty, RussianRouletteDifficulty } from "./Config/Difficulty";
+"use strict";
+
+import Board from "./Board.js";
+import BoardSize from "./Config/BoardSize.js";
+import { Difficulty, EasyDifficulty, MediumDifficulty, HardDifficulty, RussianRouletteDifficulty } from "./Config/Difficulty.js";
 //import * as HTMLIds from "./HTMLIds";
-import {UI, DropdownElement, UserNumberInput, GameArea, GameGrid, buttonSize, gameAreaPaddingBottom, GridButton} from "./UIElements";
+import {UI, DropdownElement, UserNumberInput, GameArea, GameGrid, buttonSize, gameAreaPaddingBottom, GridButton} from "./UIElements.js";
 
 const difficulties: Difficulty[] = [
     EasyDifficulty,
@@ -14,7 +16,7 @@ const difficulties: Difficulty[] = [
 const defaultDifficulty: Difficulty = EasyDifficulty;
 const debugMode: boolean = false;
 
-class Main
+export default class Main
 {
     board: Board;
     running: boolean;
@@ -180,6 +182,34 @@ class Main
     }
 }
 
-export const main: Main = new Main();
+let main = new Main();
+$("#nightmodeButton").click({"main": main}, (event) => {event.data.main.toggleNightmode()});
+$("#debugButton").click({main: main}, (event) => {event.data.main.toggleDebugMode()});
+$("#resetButton").click({main: main}, (event) => {event.data.main.reset()});
+$("#startButton").click({main: main}, (event) => {event.data.main.start()});
+
+//let main: Main = new Main();
+//window.main = main;
+//export default main;
 
 //window.main = function() { return main };
+
+// export function toggleNightmode()
+// {
+//     main.toggleNightmode();
+// }
+
+// export function toggleDebugMode()
+// {
+//     main.toggleDebugMode();
+// }
+
+// export function start()
+// {
+//     main.start();
+// }
+
+// export function reset()
+// {
+//     main.reset();
+// }

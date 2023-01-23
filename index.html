@@ -5,7 +5,7 @@
         <link rel="icon" href="bomb.png">
         <!--JQuery Boilerplate-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        <script type="module" src="./src/Main.js"></script>
+        <script type="module" src="src/Main.js"></script>
         <link rel="stylesheet" type="text/css" href="/minesweeper.css">
     </head>
     <body>
@@ -70,13 +70,17 @@
             </table>
         </div>
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                console.log("start");
-                $("#nightmodeButton").on("click", toggleNightmode);
-                $("#debugButton").on("click", toggleDebugMode);
-                $("#resetButton").on("click", reset);
-                $("#startButton").on("click", start);
-            });
+            // document.addEventListener("DOMContentLoaded", () => {
+            //     console.log("start");
+            //     let main = new Main();
+            //     if (!main) {
+            //         console.log("No main");
+            //     }
+            //     $("#nightmodeButton").click((event) => {event.data.main.toggleNightmode()}, {main: main});
+            //     $("#debugButton").click((event) => {event.data.main.toggleDebugMode()}, {main: main});
+            //     $("#resetButton").click((event) => {event.data.main.reset()}, {main: main});
+            //     $("#startButton").click((event) => {event.data.main.start()}, {main: main});
+            // });
         </script>
     </body>
 </html>

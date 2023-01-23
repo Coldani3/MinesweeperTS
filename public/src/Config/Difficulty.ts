@@ -1,4 +1,4 @@
-import BoardSize from "./BoardSize";
+import BoardSize from "./BoardSize.js";
 
 export class Difficulty {
     name: string;

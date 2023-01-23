@@ -1,5 +1,5 @@
-import Board from "./Board";
-import * as HTMLIds from "./HTMLIds"
+import Board from "./Board.js";
+import * as HTMLIds from "./HTMLIds.js"
 
 export type UserNumberInput = JQuery<HTMLInputElement>;
 export type DropdownElement = HTMLSelectElement;
