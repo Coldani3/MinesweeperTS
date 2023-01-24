@@ -4,7 +4,7 @@ import Flag from "./Flag.js";
 import GridObject from "./GridObject.js";
 import { UI, GameGrid } from "./UIElements.js";
 
-function searchGridObjList(x: number, y: number, list: GridObject[]) : boolean
+function searchGridObjList(x: number, y: number, list: GridObject[] | Bomb[] | Flag[]) : boolean
 {
     for (let object of list) 
     {
@@ -137,7 +137,7 @@ export default class Board
         {
             for (let col: number = 0; col < this.size.columns; col++)
             {
-                htmlToAdd += `<div class='button' id='b${col}-${row}' onclick='main.buttonClicked(${col}, ${row})' oncontextmenu='main.onRightClick(${col}, ${row}); return false;'> </button></div>`;
+                htmlToAdd += `<div class='button' id='b${col}-${row}' oncontextmenu='main.onRightClick(${col}, ${row}); return false;'> </button></div>`;
             }
         }
 

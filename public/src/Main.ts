@@ -66,12 +66,20 @@ export default class Main
 
     displayGrid(difficulty: Difficulty)
     {
-        console.log("Displaying grid");
         let gameArea: GameArea = UI.gameArea();
         let gameGrid: GameGrid = UI.gameGrid();
         gameArea.css("display", "flex");
 
         this.board.generateButtons();
+
+        $(".button").on("click", {main: this}, (event) => {
+            let id: string = event.target.id;
+            let splitID: string[] = id.split("-");
+            let col: number = parseInt(splitID[0].slice(1));
+            let row: number = parseInt(splitID[1]);
+
+            event.data.main.onButtonClicked(col, row);
+        });
 
         gameArea.height(buttonSize * this.board.size.rows + gameAreaPaddingBottom);
         gameGrid.width(buttonSize * this.board.size.columns);
@@ -150,12 +158,26 @@ export default class Main
     }
 
     //called from left clicking a tile
-    buttonClicked(column: number, row: number)
+    onButtonClicked(column: number, row: number)
     {
-        if (this.running && this.board && !this.board.populated)
+        console.log(`click at ${column}, ${row}`);
+        if (this.running && this.board)
         {
-            this.board.spreadBombs(column, row, this.getDifficulty().bombCount);
+            if (!this.board.populated)
+            {
+                console.log("Spreading bombs!");
+                this.board.spreadBombs(column, row, this.getDifficulty().bombCount);
+            }
+            else
+            {
+                this.tilePressed(column, row);
+            }
         }
+    }
+
+    tilePressed(column: number, row: number)
+    {
+        let tile: GridButton = UI.gridButtonAt(column, row);
     }
 
     //called from right clicking a tile
@@ -183,10 +205,10 @@ export default class Main
 }
 
 let main = new Main();
-$("#nightmodeButton").click({"main": main}, (event) => {event.data.main.toggleNightmode()});
-$("#debugButton").click({main: main}, (event) => {event.data.main.toggleDebugMode()});
-$("#resetButton").click({main: main}, (event) => {event.data.main.reset()});
-$("#startButton").click({main: main}, (event) => {event.data.main.start()});
+$("#nightmodeButton").on("click", {"main": main}, (event) => {event.data.main.toggleNightmode()});
+$("#debugButton").on("click", {main: main}, (event) => {event.data.main.toggleDebugMode()});
+$("#resetButton").on("click", {main: main}, (event) => {event.data.main.reset()});
+$("#startButton").on("click", {main: main}, (event) => {event.data.main.start()});
 
 //let main: Main = new Main();
 //window.main = main;
